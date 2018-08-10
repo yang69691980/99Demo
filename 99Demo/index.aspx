@@ -6,7 +6,7 @@
     Dim LoginSID As String = System.Guid.NewGuid.ToString
     Dim RegSID As String = System.Guid.NewGuid.ToString
     Dim UserIP As String = String.Empty
-
+    '123456
     RandomValue = RandomCreator(0, 1000000)
     UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
     Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), UserIP)
