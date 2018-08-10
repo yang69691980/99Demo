@@ -1,0 +1,2157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HeartBeat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EchoString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HeartBeatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HeartBeatResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCompanyMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCompanyMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetCompanyMessageResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WebAPIResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="tns:enumResult" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="enumResult">
+        <s:restriction base="s:string">
+          <s:enumeration value="OK" />
+          <s:enumeration value="InvalidKey" />
+          <s:enumeration value="AccountOrPasswordInvalid" />
+          <s:enumeration value="AccountNotFound" />
+          <s:enumeration value="AccountExist" />
+          <s:enumeration value="AccountLock" />
+          <s:enumeration value="InvalidAmount" />
+          <s:enumeration value="InvalidTransactionCode" />
+          <s:enumeration value="InvalidState" />
+          <s:enumeration value="InvalidPointType" />
+          <s:enumeration value="UserPointNotEnough" />
+          <s:enumeration value="InvalidCompany" />
+          <s:enumeration value="LockFail" />
+          <s:enumeration value="Other" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="PointQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PointQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PointQueryResult" type="tns:PointResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PointResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PointList" type="tns:ArrayOfPoint" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPoint">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Point" nillable="true" type="tns:Point" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Point">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PointState" type="tns:enumPointState" />
+          <s:element minOccurs="1" maxOccurs="1" name="PointValue" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="enumPointState">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="Disable" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="PointQueryByType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PointQueryByTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PointQueryByTypeResult" type="tns:PointResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepositHistoryByCompany">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="QueryStartDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="QueryEndDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepositHistoryByCompanyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepositHistoryByCompanyResult" type="tns:ArrayOfUserDepositResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUserDepositResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserDepositResult" nillable="true" type="tns:UserDepositResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserDepositResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsConfirm" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransactionCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="BeforePoint" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="RemoteIP" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDepositHistoryByUserAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="QueryStartDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="QueryEndDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="LastID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepositHistoryByUserAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepositHistoryByUserAccountResult" type="tns:ArrayOfUserDepositResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailByOrderID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="BeginOrderID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="EndOrderID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderDetailByOrderIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderDetailByOrderIDResult" type="tns:OrderDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OrderDetailResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="DetailList" type="tns:ArrayOfOrderDetail" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderDetail" nillable="true" type="tns:OrderDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OrderDetail">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SummaryDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GameCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GameRound" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CostSubCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderValue" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="RewardValue" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ValidValue" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserIP" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RawData" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CheckUserExist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserExistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckUserExistResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RealName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserLevel" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserPointType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateUserResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetUserState">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DisableUser" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetUserStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetUserStateResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserAppendPointType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserAppendPointTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserAppendPointTypeResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserRemovePointType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserRemovePointTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserRemovePointTypeResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ValueSet" type="tns:ArrayOfUserSetValue" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUserSetValue">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserSetValue" nillable="true" type="tns:UserSetValue" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserSetValue">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Field" type="tns:enumField" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="enumField">
+        <s:restriction base="s:string">
+          <s:enumeration value="RealName" />
+          <s:enumeration value="Description" />
+          <s:enumeration value="UserLevel" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="SetUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetUserInfoResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserInfoResult" type="tns:UserInfoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserInfoResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="UserAccountState" type="tns:enumUserAccountState" />
+              <s:element minOccurs="0" maxOccurs="1" name="RealName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="UserLevel" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="UserPointType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastLoginIP" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastLoginDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="enumUserAccountState">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="Disabled" />
+          <s:enumeration value="Locked" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetCompanyInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompanyInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompanyInfoResult" type="tns:CompanyInfoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CompanyInfoResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CompanyState" type="tns:enumCompanyState" />
+              <s:element minOccurs="1" maxOccurs="1" name="CompanyID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyPointType" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="enumCompanyState">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="Disabled" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="UserDeposit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserDepositResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserDepositResult" type="tns:UserBalanceInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UserBalanceInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="TransactionCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionValue" type="s:decimal" />
+              <s:element minOccurs="1" maxOccurs="1" name="Balance" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UserDepositConfirm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserDepositConfirmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserDepositConfirmResult" type="tns:UserBalanceInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserWithdrawal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserWithdrawalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserWithdrawalResult" type="tns:UserBalanceInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserWithdrawalConfirm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PointType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserWithdrawalConfirmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserWithdrawalConfirmResult" type="tns:UserBalanceInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserIsLogined">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserIsLoginedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckUserIsLoginedResult" type="tns:LoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LoginResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WebAPIResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LoginGUID" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UserLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DeviceType" type="tns:enumLoginDeviceType" />
+            <s:element minOccurs="0" maxOccurs="1" name="DeviceGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserIP" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="enumLoginDeviceType">
+        <s:restriction base="s:string">
+          <s:enumeration value="PC" />
+          <s:enumeration value="Mobile" />
+          <s:enumeration value="Other" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="UserLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserLoginResult" type="tns:LoginResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="LoginGUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserLogoutResult" type="tns:WebAPIResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="WebAPIResult" nillable="true" type="tns:WebAPIResult" />
+      <s:element name="PointResult" nillable="true" type="tns:PointResult" />
+      <s:element name="ArrayOfUserDepositResult" nillable="true" type="tns:ArrayOfUserDepositResult" />
+      <s:element name="OrderDetailResult" nillable="true" type="tns:OrderDetailResult" />
+      <s:element name="UserInfoResult" nillable="true" type="tns:UserInfoResult" />
+      <s:element name="CompanyInfoResult" nillable="true" type="tns:CompanyInfoResult" />
+      <s:element name="UserBalanceInfo" nillable="true" type="tns:UserBalanceInfo" />
+      <s:element name="LoginResult" nillable="true" type="tns:LoginResult" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HeartBeatSoapIn">
+    <wsdl:part name="parameters" element="tns:HeartBeat" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatSoapOut">
+    <wsdl:part name="parameters" element="tns:HeartBeatResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCompanyMessage" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCompanyMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="PointQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:PointQuery" />
+  </wsdl:message>
+  <wsdl:message name="PointQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:PointQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:PointQueryByType" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:PointQueryByTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanySoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepositHistoryByCompany" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanySoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepositHistoryByCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepositHistoryByUserAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepositHistoryByUserAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailByOrderID" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailByOrderIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckUserExist" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckUserExistResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateSoapIn">
+    <wsdl:part name="parameters" element="tns:SetUserState" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateSoapOut">
+    <wsdl:part name="parameters" element="tns:SetUserStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:UserAppendPointType" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:UserAppendPointTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:UserRemovePointType" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:UserRemovePointTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:SetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="SetUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:SetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompanyInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompanyInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositSoapIn">
+    <wsdl:part name="parameters" element="tns:UserDeposit" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositSoapOut">
+    <wsdl:part name="parameters" element="tns:UserDepositResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmSoapIn">
+    <wsdl:part name="parameters" element="tns:UserDepositConfirm" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmSoapOut">
+    <wsdl:part name="parameters" element="tns:UserDepositConfirmResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalSoapIn">
+    <wsdl:part name="parameters" element="tns:UserWithdrawal" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalSoapOut">
+    <wsdl:part name="parameters" element="tns:UserWithdrawalResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmSoapIn">
+    <wsdl:part name="parameters" element="tns:UserWithdrawalConfirm" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmSoapOut">
+    <wsdl:part name="parameters" element="tns:UserWithdrawalConfirmResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckUserIsLogined" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckUserIsLoginedResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogin" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogout" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatHttpGetIn">
+    <wsdl:part name="EchoString" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="Message" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryHttpGetOut">
+    <wsdl:part name="Body" element="tns:PointResult" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeHttpGetOut">
+    <wsdl:part name="Body" element="tns:PointResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanyHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="QueryStartDate" type="s:string" />
+    <wsdl:part name="QueryEndDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanyHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfUserDepositResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="QueryStartDate" type="s:string" />
+    <wsdl:part name="QueryEndDate" type="s:string" />
+    <wsdl:part name="LastID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfUserDepositResult" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="BeginOrderID" type="s:string" />
+    <wsdl:part name="EndOrderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:OrderDetailResult" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="RealName" type="s:string" />
+    <wsdl:part name="UserLevel" type="s:string" />
+    <wsdl:part name="UserPointType" type="s:string" />
+    <wsdl:part name="Description" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="DisableUser" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:UserInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:CompanyInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositHttpGetOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="TransactionCode" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmHttpGetOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalHttpGetOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="TransactionCode" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmHttpGetOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedHttpGetOut">
+    <wsdl:part name="Body" element="tns:LoginResult" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="DeviceType" type="s:string" />
+    <wsdl:part name="DeviceGUID" type="s:string" />
+    <wsdl:part name="UserIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:LoginResult" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpGetOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatHttpPostIn">
+    <wsdl:part name="EchoString" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HeartBeatHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="Message" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetCompanyMessageHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryHttpPostOut">
+    <wsdl:part name="Body" element="tns:PointResult" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PointQueryByTypeHttpPostOut">
+    <wsdl:part name="Body" element="tns:PointResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanyHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="QueryStartDate" type="s:string" />
+    <wsdl:part name="QueryEndDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByCompanyHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfUserDepositResult" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="QueryStartDate" type="s:string" />
+    <wsdl:part name="QueryEndDate" type="s:string" />
+    <wsdl:part name="LastID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDepositHistoryByUserAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfUserDepositResult" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="BeginOrderID" type="s:string" />
+    <wsdl:part name="EndOrderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderDetailByOrderIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:OrderDetailResult" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserExistHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="RealName" type="s:string" />
+    <wsdl:part name="UserLevel" type="s:string" />
+    <wsdl:part name="UserPointType" type="s:string" />
+    <wsdl:part name="Description" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="DisableUser" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetUserStateHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserAppendPointTypeHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserRemovePointTypeHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetUserInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCompanyInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:CompanyInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="TransactionCode" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserDepositConfirmHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="TransactionCode" type="s:string" />
+    <wsdl:part name="PointType" type="s:string" />
+    <wsdl:part name="Amount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserWithdrawalConfirmHttpPostOut">
+    <wsdl:part name="Body" element="tns:UserBalanceInfo" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserIsLoginedHttpPostOut">
+    <wsdl:part name="Body" element="tns:LoginResult" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginAccount" type="s:string" />
+    <wsdl:part name="DeviceType" type="s:string" />
+    <wsdl:part name="DeviceGUID" type="s:string" />
+    <wsdl:part name="UserIP" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:LoginResult" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="CompanyCode" type="s:string" />
+    <wsdl:part name="LoginGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutHttpPostOut">
+    <wsdl:part name="Body" element="tns:WebAPIResult" />
+  </wsdl:message>
+  <wsdl:portType name="WebAPISoap">
+    <wsdl:operation name="HeartBeat">
+      <wsdl:input message="tns:HeartBeatSoapIn" />
+      <wsdl:output message="tns:HeartBeatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <wsdl:input message="tns:SetCompanyMessageSoapIn" />
+      <wsdl:output message="tns:SetCompanyMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <wsdl:input message="tns:PointQuerySoapIn" />
+      <wsdl:output message="tns:PointQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <wsdl:input message="tns:PointQueryByTypeSoapIn" />
+      <wsdl:output message="tns:PointQueryByTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <wsdl:input message="tns:GetDepositHistoryByCompanySoapIn" />
+      <wsdl:output message="tns:GetDepositHistoryByCompanySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <wsdl:input message="tns:GetDepositHistoryByUserAccountSoapIn" />
+      <wsdl:output message="tns:GetDepositHistoryByUserAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <wsdl:input message="tns:GetOrderDetailByOrderIDSoapIn" />
+      <wsdl:output message="tns:GetOrderDetailByOrderIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <wsdl:input message="tns:CheckUserExistSoapIn" />
+      <wsdl:output message="tns:CheckUserExistSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <wsdl:input message="tns:CreateUserSoapIn" />
+      <wsdl:output message="tns:CreateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <wsdl:input message="tns:SetUserStateSoapIn" />
+      <wsdl:output message="tns:SetUserStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <wsdl:input message="tns:UserAppendPointTypeSoapIn" />
+      <wsdl:output message="tns:UserAppendPointTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <wsdl:input message="tns:UserRemovePointTypeSoapIn" />
+      <wsdl:output message="tns:UserRemovePointTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUserInfo">
+      <wsdl:input message="tns:SetUserInfoSoapIn" />
+      <wsdl:output message="tns:SetUserInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input message="tns:GetUserInfoSoapIn" />
+      <wsdl:output message="tns:GetUserInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <wsdl:input message="tns:GetCompanyInfoSoapIn" />
+      <wsdl:output message="tns:GetCompanyInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <wsdl:input message="tns:UserDepositSoapIn" />
+      <wsdl:output message="tns:UserDepositSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <wsdl:input message="tns:UserDepositConfirmSoapIn" />
+      <wsdl:output message="tns:UserDepositConfirmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <wsdl:input message="tns:UserWithdrawalSoapIn" />
+      <wsdl:output message="tns:UserWithdrawalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <wsdl:input message="tns:UserWithdrawalConfirmSoapIn" />
+      <wsdl:output message="tns:UserWithdrawalConfirmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <wsdl:input message="tns:CheckUserIsLoginedSoapIn" />
+      <wsdl:output message="tns:CheckUserIsLoginedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:input message="tns:UserLoginSoapIn" />
+      <wsdl:output message="tns:UserLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <wsdl:input message="tns:UserLogoutSoapIn" />
+      <wsdl:output message="tns:UserLogoutSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WebAPIHttpGet">
+    <wsdl:operation name="HeartBeat">
+      <wsdl:input message="tns:HeartBeatHttpGetIn" />
+      <wsdl:output message="tns:HeartBeatHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <wsdl:input message="tns:SetCompanyMessageHttpGetIn" />
+      <wsdl:output message="tns:SetCompanyMessageHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <wsdl:input message="tns:PointQueryHttpGetIn" />
+      <wsdl:output message="tns:PointQueryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <wsdl:input message="tns:PointQueryByTypeHttpGetIn" />
+      <wsdl:output message="tns:PointQueryByTypeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <wsdl:input message="tns:GetDepositHistoryByCompanyHttpGetIn" />
+      <wsdl:output message="tns:GetDepositHistoryByCompanyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <wsdl:input message="tns:GetDepositHistoryByUserAccountHttpGetIn" />
+      <wsdl:output message="tns:GetDepositHistoryByUserAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <wsdl:input message="tns:GetOrderDetailByOrderIDHttpGetIn" />
+      <wsdl:output message="tns:GetOrderDetailByOrderIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <wsdl:input message="tns:CheckUserExistHttpGetIn" />
+      <wsdl:output message="tns:CheckUserExistHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <wsdl:input message="tns:CreateUserHttpGetIn" />
+      <wsdl:output message="tns:CreateUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <wsdl:input message="tns:SetUserStateHttpGetIn" />
+      <wsdl:output message="tns:SetUserStateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <wsdl:input message="tns:UserAppendPointTypeHttpGetIn" />
+      <wsdl:output message="tns:UserAppendPointTypeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <wsdl:input message="tns:UserRemovePointTypeHttpGetIn" />
+      <wsdl:output message="tns:UserRemovePointTypeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input message="tns:GetUserInfoHttpGetIn" />
+      <wsdl:output message="tns:GetUserInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <wsdl:input message="tns:GetCompanyInfoHttpGetIn" />
+      <wsdl:output message="tns:GetCompanyInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <wsdl:input message="tns:UserDepositHttpGetIn" />
+      <wsdl:output message="tns:UserDepositHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <wsdl:input message="tns:UserDepositConfirmHttpGetIn" />
+      <wsdl:output message="tns:UserDepositConfirmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <wsdl:input message="tns:UserWithdrawalHttpGetIn" />
+      <wsdl:output message="tns:UserWithdrawalHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <wsdl:input message="tns:UserWithdrawalConfirmHttpGetIn" />
+      <wsdl:output message="tns:UserWithdrawalConfirmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <wsdl:input message="tns:CheckUserIsLoginedHttpGetIn" />
+      <wsdl:output message="tns:CheckUserIsLoginedHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:input message="tns:UserLoginHttpGetIn" />
+      <wsdl:output message="tns:UserLoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <wsdl:input message="tns:UserLogoutHttpGetIn" />
+      <wsdl:output message="tns:UserLogoutHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WebAPIHttpPost">
+    <wsdl:operation name="HeartBeat">
+      <wsdl:input message="tns:HeartBeatHttpPostIn" />
+      <wsdl:output message="tns:HeartBeatHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <wsdl:input message="tns:SetCompanyMessageHttpPostIn" />
+      <wsdl:output message="tns:SetCompanyMessageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <wsdl:input message="tns:PointQueryHttpPostIn" />
+      <wsdl:output message="tns:PointQueryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <wsdl:input message="tns:PointQueryByTypeHttpPostIn" />
+      <wsdl:output message="tns:PointQueryByTypeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <wsdl:input message="tns:GetDepositHistoryByCompanyHttpPostIn" />
+      <wsdl:output message="tns:GetDepositHistoryByCompanyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <wsdl:input message="tns:GetDepositHistoryByUserAccountHttpPostIn" />
+      <wsdl:output message="tns:GetDepositHistoryByUserAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <wsdl:input message="tns:GetOrderDetailByOrderIDHttpPostIn" />
+      <wsdl:output message="tns:GetOrderDetailByOrderIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <wsdl:input message="tns:CheckUserExistHttpPostIn" />
+      <wsdl:output message="tns:CheckUserExistHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <wsdl:input message="tns:CreateUserHttpPostIn" />
+      <wsdl:output message="tns:CreateUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <wsdl:input message="tns:SetUserStateHttpPostIn" />
+      <wsdl:output message="tns:SetUserStateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <wsdl:input message="tns:UserAppendPointTypeHttpPostIn" />
+      <wsdl:output message="tns:UserAppendPointTypeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <wsdl:input message="tns:UserRemovePointTypeHttpPostIn" />
+      <wsdl:output message="tns:UserRemovePointTypeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input message="tns:GetUserInfoHttpPostIn" />
+      <wsdl:output message="tns:GetUserInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <wsdl:input message="tns:GetCompanyInfoHttpPostIn" />
+      <wsdl:output message="tns:GetCompanyInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <wsdl:input message="tns:UserDepositHttpPostIn" />
+      <wsdl:output message="tns:UserDepositHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <wsdl:input message="tns:UserDepositConfirmHttpPostIn" />
+      <wsdl:output message="tns:UserDepositConfirmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <wsdl:input message="tns:UserWithdrawalHttpPostIn" />
+      <wsdl:output message="tns:UserWithdrawalHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <wsdl:input message="tns:UserWithdrawalConfirmHttpPostIn" />
+      <wsdl:output message="tns:UserWithdrawalConfirmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <wsdl:input message="tns:CheckUserIsLoginedHttpPostIn" />
+      <wsdl:output message="tns:CheckUserIsLoginedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <wsdl:input message="tns:UserLoginHttpPostIn" />
+      <wsdl:output message="tns:UserLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <wsdl:input message="tns:UserLogoutHttpPostIn" />
+      <wsdl:output message="tns:UserLogoutHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebAPISoap" type="tns:WebAPISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HeartBeat">
+      <soap:operation soapAction="http://tempuri.org/HeartBeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <soap:operation soapAction="http://tempuri.org/SetCompanyMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <soap:operation soapAction="http://tempuri.org/PointQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <soap:operation soapAction="http://tempuri.org/PointQueryByType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <soap:operation soapAction="http://tempuri.org/GetDepositHistoryByCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <soap:operation soapAction="http://tempuri.org/GetDepositHistoryByUserAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <soap:operation soapAction="http://tempuri.org/GetOrderDetailByOrderID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <soap:operation soapAction="http://tempuri.org/CheckUserExist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://tempuri.org/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <soap:operation soapAction="http://tempuri.org/SetUserState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <soap:operation soapAction="http://tempuri.org/UserAppendPointType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <soap:operation soapAction="http://tempuri.org/UserRemovePointType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/SetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <soap:operation soapAction="http://tempuri.org/GetCompanyInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <soap:operation soapAction="http://tempuri.org/UserDeposit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <soap:operation soapAction="http://tempuri.org/UserDepositConfirm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <soap:operation soapAction="http://tempuri.org/UserWithdrawal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <soap:operation soapAction="http://tempuri.org/UserWithdrawalConfirm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <soap:operation soapAction="http://tempuri.org/CheckUserIsLogined" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="http://tempuri.org/UserLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <soap:operation soapAction="http://tempuri.org/UserLogout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebAPISoap12" type="tns:WebAPISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HeartBeat">
+      <soap12:operation soapAction="http://tempuri.org/HeartBeat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <soap12:operation soapAction="http://tempuri.org/SetCompanyMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <soap12:operation soapAction="http://tempuri.org/PointQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <soap12:operation soapAction="http://tempuri.org/PointQueryByType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <soap12:operation soapAction="http://tempuri.org/GetDepositHistoryByCompany" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <soap12:operation soapAction="http://tempuri.org/GetDepositHistoryByUserAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <soap12:operation soapAction="http://tempuri.org/GetOrderDetailByOrderID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <soap12:operation soapAction="http://tempuri.org/CheckUserExist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap12:operation soapAction="http://tempuri.org/CreateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <soap12:operation soapAction="http://tempuri.org/SetUserState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <soap12:operation soapAction="http://tempuri.org/UserAppendPointType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <soap12:operation soapAction="http://tempuri.org/UserRemovePointType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/SetUserInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetCompanyInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <soap12:operation soapAction="http://tempuri.org/UserDeposit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <soap12:operation soapAction="http://tempuri.org/UserDepositConfirm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <soap12:operation soapAction="http://tempuri.org/UserWithdrawal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <soap12:operation soapAction="http://tempuri.org/UserWithdrawalConfirm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <soap12:operation soapAction="http://tempuri.org/CheckUserIsLogined" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap12:operation soapAction="http://tempuri.org/UserLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <soap12:operation soapAction="http://tempuri.org/UserLogout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebAPIHttpGet" type="tns:WebAPIHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="HeartBeat">
+      <http:operation location="/HeartBeat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <http:operation location="/SetCompanyMessage" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <http:operation location="/PointQuery" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <http:operation location="/PointQueryByType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <http:operation location="/GetDepositHistoryByCompany" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <http:operation location="/GetDepositHistoryByUserAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <http:operation location="/GetOrderDetailByOrderID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <http:operation location="/CheckUserExist" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <http:operation location="/CreateUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <http:operation location="/SetUserState" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <http:operation location="/UserAppendPointType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <http:operation location="/UserRemovePointType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <http:operation location="/GetUserInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <http:operation location="/GetCompanyInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <http:operation location="/UserDeposit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <http:operation location="/UserDepositConfirm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <http:operation location="/UserWithdrawal" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <http:operation location="/UserWithdrawalConfirm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <http:operation location="/CheckUserIsLogined" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <http:operation location="/UserLogin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <http:operation location="/UserLogout" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebAPIHttpPost" type="tns:WebAPIHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HeartBeat">
+      <http:operation location="/HeartBeat" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompanyMessage">
+      <http:operation location="/SetCompanyMessage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQuery">
+      <http:operation location="/PointQuery" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PointQueryByType">
+      <http:operation location="/PointQueryByType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByCompany">
+      <http:operation location="/GetDepositHistoryByCompany" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepositHistoryByUserAccount">
+      <http:operation location="/GetDepositHistoryByUserAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetailByOrderID">
+      <http:operation location="/GetOrderDetailByOrderID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserExist">
+      <http:operation location="/CheckUserExist" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <http:operation location="/CreateUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUserState">
+      <http:operation location="/SetUserState" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserAppendPointType">
+      <http:operation location="/UserAppendPointType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserRemovePointType">
+      <http:operation location="/UserRemovePointType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <http:operation location="/GetUserInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompanyInfo">
+      <http:operation location="/GetCompanyInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDeposit">
+      <http:operation location="/UserDeposit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserDepositConfirm">
+      <http:operation location="/UserDepositConfirm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawal">
+      <http:operation location="/UserWithdrawal" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserWithdrawalConfirm">
+      <http:operation location="/UserWithdrawalConfirm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserIsLogined">
+      <http:operation location="/CheckUserIsLogined" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <http:operation location="/UserLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <http:operation location="/UserLogout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebAPI">
+    <wsdl:port name="WebAPISoap" binding="tns:WebAPISoap">
+      <soap:address location="http://core.99play.com/api/Webapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebAPISoap12" binding="tns:WebAPISoap12">
+      <soap12:address location="http://core.99play.com/api/Webapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebAPIHttpGet" binding="tns:WebAPIHttpGet">
+      <http:address location="http://core.99play.com/api/Webapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebAPIHttpPost" binding="tns:WebAPIHttpPost">
+      <http:address location="http://core.99play.com/api/Webapi.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
