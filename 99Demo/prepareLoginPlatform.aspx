@@ -8,7 +8,11 @@
     Dim UserIP As String = String.Empty
 
     RandomValue = RandomCreator(0, 1000000)
-    UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
+    If GetUserIP().IndexOf(":") <> -1 Then
+        UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
+    Else
+        UserIP = GetUserIP()
+    End If
     Token = CreateURLToken(CompanyCode, ApiKey, RandomValue, UserIP)
 %>
 
@@ -22,8 +26,14 @@
     <script language="javascript" src="js/Web99API.js"></script>
     <script type="text/javascript">
         var web99API;
-        var apiURL = "https://Web1002.99play.com/API/Web.asmx";
-        //var apiURL = "http://99web.dev.mts.idv.tw/API/Web.asmx";
+        <%If IsTestSite = True Then%>
+            var apiURL = "http://99web.dev.mts.idv.tw/API/Web.asmx";
+            var gameURL = "http://99game.dev.mts.idv.tw/login.aspx?LoginGUID=";
+        <%Else%>
+            var apiURL = "https://Web1002.99play.com/API/Web.asmx";
+            var gameURL = "https://game.99play.com/login.aspx?LoginGUID=";
+
+        <%End If%>
         var token = "<%=Token %>";
         var companyCode = "<%=CompanyCode %>";
 
@@ -67,10 +77,10 @@
 
                                 if (promiseList.length > 0) {
                                     Promise.all(promiseList).then(function () {
-                                        window.location.href = "http://game.99play.com/login.aspx?LoginGUID=" + o.LoginGUID;
+                                        window.location.href = gameURL + o.LoginGUID;
                                     });
                                 } else {
-                                    window.location.href = "http://game.99play.com/login.aspx?LoginGUID=" + o.LoginGUID;
+                                    window.location.href = gameURL + o.LoginGUID;
                                 }
 
                             }
@@ -89,8 +99,8 @@
             });
         }
 
-        window.setTimeout(function () {init() },5000)
-        //window.onload = init;
+        //window.setTimeout(function () {init() },5000)
+        window.onload = init;
     </script>
 </head>
 <body>
