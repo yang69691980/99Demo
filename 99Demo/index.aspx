@@ -8,7 +8,11 @@
     Dim UserIP As String = String.Empty
     '123456
     RandomValue = RandomCreator(0, 1000000)
-    UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
+    If GetUserIP().IndexOf(":") <> -1 Then
+        UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
+    Else
+        UserIP = GetUserIP()
+    End If
     Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), UserIP)
 %>
 
