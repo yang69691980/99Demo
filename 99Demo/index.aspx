@@ -62,7 +62,11 @@
         var loginSID = "<%=LoginSID%>";
         var regSID = "<%=RegSID%>";
         var api;        
-        var apiWeb = "https://web1002.99play.com";
+        <%If IsTestSite = True Then%>
+            var apiWeb = "http://99web.dev.mts.idv.tw";
+        <%Else%>
+            var apiWeb = "https://web1002.99play.com";
+        <%End If%>
         var apiWebURL = apiWeb + "/API/Web.asmx";
         var token = "<%=Token %>";
         var key = "<%=ApiKey %>";
