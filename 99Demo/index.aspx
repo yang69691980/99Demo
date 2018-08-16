@@ -206,8 +206,8 @@
                 if (point != null) {
                     if (point.PointList != null) {
                         if (point.PointList.length > 0) {
-                            pointType = point.PointList[1].PointType;
-                            amount = point.PointList[1].PointValue;
+                            pointType = point.PointList[0].PointType;
+                            amount = point.PointList[0].PointValue;
                         }
                     }
                 }
