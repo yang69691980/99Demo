@@ -8,12 +8,18 @@
     Dim UserIP As String = String.Empty
 
     RandomValue = RandomCreator(0, 1000000)
-    If GetUserIP().IndexOf(":") <> -1 Then
-        UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
-    Else
-        UserIP = GetUserIP()
-    End If
-    Token = CreateURLToken(CompanyCode, ApiKey, RandomValue, UserIP)
+    'If GetUserIP().IndexOf(",") <> -1 Then
+    '    UserIP = GetUserIP().Split(",")(0)
+    'Else
+    '    UserIP = GetUserIP()
+    'End If
+
+    'If UserIP.IndexOf(":") <> -1 Then
+    '    UserIP = UserIP.Substring(0, GetUserIP().IndexOf(":"))
+    'Else
+    '    UserIP = UserIP
+    'End If
+    Token = CreateURLToken(CompanyCode, ApiKey, RandomValue, "")
 %>
 
 <html lang="en">
@@ -40,12 +46,12 @@
 
         function init() {
             var sid = window.sessionStorage.getItem("sessionId");
-
+            //alert(token + "," + companyCode + "," + apiURL);
             api = new web99API(token, companyCode, apiURL, "");
             api.prepareLoginPlatform("99", sid, "0", function (success, o) {
                 if (success) {
                     if (o.ResultCode == 0) {
-
+                        
                         //window.location.href = "http://game.99play.com/login.aspx?LoginGUID=" + o.LoginGUID;
                         //return;
                         //alert("http://game.99play.com/login.aspx?LoginGUID=" + o.LoginGUID);

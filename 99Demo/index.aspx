@@ -8,12 +8,20 @@
     Dim UserIP As String = String.Empty
     '123456
     RandomValue = RandomCreator(0, 1000000)
-    If GetUserIP().IndexOf(":") <> -1 Then
-        UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
-    Else
-        UserIP = GetUserIP()
-    End If
-    Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), UserIP)
+    'Response.Write(HttpContext.Current.Request.Headers("X-Forwarded-For") & "|" & HttpContext.Current.Request.UserHostAddress)
+    'If GetUserIP().IndexOf(",") <> -1 Then
+    '    UserIP = GetUserIP().Split(",")(0)
+    'Else
+    '    UserIP = GetUserIP()
+    'End If
+
+    'If UserIP.IndexOf(":") <> -1 Then
+    '    UserIP = UserIP.Substring(0, GetUserIP().IndexOf(":"))
+    'Else
+    '    UserIP = UserIP
+    'End If
+
+    Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), "")
 %>
 
 <!DOCTYPE html>
