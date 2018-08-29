@@ -10,11 +10,11 @@
     '123456
     SiteDomain = Request.Headers.Get("HOST")
 
-    If IsTestSite = False Then
-        If Request.IsSecureConnection = False Then
-            Response.Redirect("https://" & SiteDomain)
-        End If
-    End If
+    'If IsTestSite = False Then
+    '    If Request.IsSecureConnection = False Then
+    '        Response.Redirect("https://" & SiteDomain)
+    '    End If
+    'End If
     RandomValue = RandomCreator(0, 1000000)
     'Response.Write(HttpContext.Current.Request.Headers("X-Forwarded-For") & "|" & HttpContext.Current.Request.UserHostAddress)
     'If GetUserIP().IndexOf(",") <> -1 Then
