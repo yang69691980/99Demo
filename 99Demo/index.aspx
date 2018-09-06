@@ -6,10 +6,30 @@
     Dim LoginSID As String = System.Guid.NewGuid.ToString
     Dim RegSID As String = System.Guid.NewGuid.ToString
     Dim UserIP As String = String.Empty
+    Dim SiteDomain As String = String.Empty
     '123456
+    SiteDomain = Request.Headers.Get("HOST")
+
+    'If IsTestSite = False Then
+    '    If Request.IsSecureConnection = False Then
+    '        Response.Redirect("https://" & SiteDomain)
+    '    End If
+    'End If
     RandomValue = RandomCreator(0, 1000000)
-    UserIP = GetUserIP().Substring(0, GetUserIP().IndexOf(":"))
-    Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), UserIP)
+    'Response.Write(HttpContext.Current.Request.Headers("X-Forwarded-For") & "|" & HttpContext.Current.Request.UserHostAddress)
+    'If GetUserIP().IndexOf(",") <> -1 Then
+    '    UserIP = GetUserIP().Split(",")(0)
+    'Else
+    '    UserIP = GetUserIP()
+    'End If
+
+    'If UserIP.IndexOf(":") <> -1 Then
+    '    UserIP = UserIP.Substring(0, GetUserIP().IndexOf(":"))
+    'Else
+    '    UserIP = UserIP
+    'End If
+
+    Token = CreateURLToken(CompanyCode, ApiKey, CStr(RandomValue), "")
 %>
 
 <!DOCTYPE html>
@@ -58,7 +78,11 @@
         var loginSID = "<%=LoginSID%>";
         var regSID = "<%=RegSID%>";
         var api;        
-        var apiWeb = "https://web1002.99play.com";
+        <%If IsTestSite = True Then%>
+            var apiWeb = "http://99web.dev.mts.idv.tw";
+        <%Else%>
+            var apiWeb = "https://web1002.99play.com";
+        <%End If%>
         var apiWebURL = apiWeb + "/API/Web.asmx";
         var token = "<%=Token %>";
         var key = "<%=ApiKey %>";
